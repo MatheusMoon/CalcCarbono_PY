@@ -1,0 +1,93 @@
+/* Resetando margens e padding padrões */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f1f1f1; /* Fundo claro */
+    color: #333; /* Cor do texto */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* Título principal */
+h1 {
+    color: #2e8b57; /* Verde sustentável */
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+/* Estilo do formulário */
+form {
+    background-color: #fff; /* Fundo branco para o formulário */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+/* Estilo dos campos de entrada */
+input[type="number"], input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus, input[type="submit"]:hover {
+    border-color: #2e8b57; /* Cor verde no foco */
+}
+
+/* Botão de envio */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    background-color: #2e8b57; /* Verde sustentável */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #276747; /* Verde mais escuro ao passar o mouse */
+}
+
+/* Estilo da seção de informações */
+.info {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.info h3 {
+    color: #2e8b57; /* Título verde */
+    margin-bottom: 10px;
+}
+
+.info p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}

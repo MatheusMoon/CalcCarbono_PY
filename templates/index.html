@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Pegada de Carbono</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1>Calculadora de Pegada de Carbono</h1>
+    <form id="calcForm">
+        <label for="transporte">Quilômetros percorridos de carro (km):</label>
+        <input type="number" id="transporte" name="transporte" step="0.1" required><br>
+
+        <label for="carne">Consumo de carne (kg):</label>
+        <input type="number" id="carne" name="carne" step="0.1" required><br>
+
+        <label for="energia">Consumo de energia elétrica (kWh):</label>
+        <input type="number" id="energia" name="energia" step="0.1" required><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <div class="info">
+        <h3>O que cada categoria significa?</h3>
+        <p><strong>Transporte:</strong> O transporte emite CO₂ devido à queima de combustíveis fósseis, especialmente em carros movidos a gasolina ou diesel.</p>
+        <p><strong>Carne:</strong> A produção de carne tem uma alta pegada de carbono devido à emissão de metano pelos animais e ao uso de recursos naturais.</p>
+        <p><strong>Energia elétrica:</strong> A pegada de carbono da energia elétrica depende da matriz energética. Fontes renováveis (como solar e eólica) emitem menos CO₂ do que carvão ou gás natural.</p>
+    </div>
+
+    <div class="resultado">
+        <h3>Resultado:</h3>
+        <p id="resultado">Em breve aparecerá o resultado.</p>
+        <button id="salvarRelatorio" onclick="salvarRelatorio()">Salvar Relatório</button>
+        <p id="mensagemSucesso" style="color: green; display: none;">Relatório salvo com sucesso!</p> <!-- Mensagem de sucesso -->
+    </div>
+
+    <script>
+        // Enviar o formulário via AJAX para evitar redirecionamento
+        document.getElementById('calcForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Impede o envio tradicional do formulário
+
+            // Coleta os dados do formulário
+            let transporte = document.getElementById('transporte').value;
+            let carne = document.getElementById('carne').value;
+            let energia = document.getElementById('energia').value;
+
+            // Envia os dados via AJAX
+            fetch('/calcular', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    transporte: transporte,
+                    carne: carne,
+                    energia: energia
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Exibe os resultados na página
+                document.getElementById('resultado').innerHTML = `
+                    Transporte: ${data.transporte} kg CO₂e<br>
+                    Carne: ${data.carne} kg CO₂e<br>
+                    Energia: ${data.energia} kg CO₂e<br>
+                    Total: ${data.total} kg CO₂e<br>
+                    Sua pegada de carbono é ${data.comparativo} em relação à média global.
+                `;
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+        });
+
+        // Função para salvar o relatório
+        function salvarRelatorio() {
+            fetch('/relatorio', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Adicionando o cabeçalho Content-Type correto
+                },
+                body: JSON.stringify({
+                    transporte: document.getElementById('transporte').value,
+                    carne: document.getElementById('carne').value,
+                    energia: document.getElementById('energia').value
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Relatório salvo com sucesso!");
+            })
+            .catch(error => {
+                console.error('Erro ao salvar relatório:', error);
+            });
+        }
+    </script>
+</body>
+</html>
